@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dropzone and WaveSurfer example - flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/dropzone.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
+    <script src="{{ url_for('static', filename='javascripts/dropzone.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='javascripts/wavesurfer.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='javascripts/jquery.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='javascripts/app.js')}}"></script>
+</head>
+<body>
+    <p>
+        Dropzone and WaveSurfer example - flask
+    </p>
+
+    <form action="/upload" method="post" class="dropzone"></form>
+    </br></br>
+    <hr>
+    <div>
+        {% for  image in all_image_files %}
+            <div class="responsive">
+              <div class="img">
+                <a target="_blank" href="static/uploads/{{image}}">
+                  <img src="static/uploads/{{image}}" alt="{{image}}" >
+                </a>
+                <div class="desc">{{image}}</div>
+              </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    {% for mp3 in all_mp3_files %}
+        <div class="responsive">
+            <i class="fa fa-music" aria-hidden="true"> {{ mp3 }}</i>
+                <i class="fa fa-play-circle" aria-hidden="true" onclick="wavesurfer{{loop.index0}}.playPause()"></i>
+                <i class="fa fa-stop-circle" aria-hidden="true"  onclick="wavesurfer{{loop.index0}}.stop()"></i>
+            <div id="waveform{{loop.index0}}"></div>
+            <script>
+            var wavesurfer{{loop.index0}} = WaveSurfer.create({
+                container: '#waveform{{loop.index0}}',
+                waveColor: 'violet',
+                progressColor: 'purple',
+                scrollParent: true
+            });
+            wavesurfer{{loop.index0}}.load('static/uploads/{{mp3}}');
+            </script>
+        </div>
+    {% endfor %}
+
+</body>
+</html>
