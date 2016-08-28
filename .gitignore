@@ -58,6 +58,9 @@ local_settings.py
 instance/
 .webassets-cache
 
+# 使用者上傳的檔案
+static/uploads/
+
 # Scrapy stuff:
 .scrapy
 

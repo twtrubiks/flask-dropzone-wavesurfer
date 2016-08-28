@@ -1,52 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>Dropzone and WaveSurfer example - flask</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/dropzone.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/font-awesome.min.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>FilePond and WaveSurfer example - flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/filepond.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/styles.css') }}">
-    <script src="{{ url_for('static', filename='javascripts/dropzone.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='javascripts/wavesurfer.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='javascripts/jquery.min.js')}}"></script>
-    <script src="{{ url_for('static', filename='javascripts/app.js')}}"></script>
+    <script src="{{ url_for('static', filename='javascripts/filepond.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascripts/wavesurfer.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascripts/app.js') }}"></script>
 </head>
 <body>
     <p>
-        Dropzone and WaveSurfer example - flask
+        FilePond and WaveSurfer example - flask
     </p>
 
-    <form action="/upload" method="post" class="dropzone"></form>
-    </br></br>
+    <input type="file" class="filepond" multiple>
     <hr>
+
     <div>
-        {% for  image in all_image_files %}
+        {% for image in images %}
             <div class="responsive">
               <div class="img">
-                <a target="_blank" href="static/uploads/{{image}}">
-                  <img src="static/uploads/{{image}}" alt="{{image}}" >
+                <a target="_blank" href="{{ url_for('static', filename='uploads/' + image) }}">
+                  <img src="{{ url_for('static', filename='uploads/' + image) }}" alt="{{ image }}">
                 </a>
-                <div class="desc">{{image}}</div>
+                <div class="desc">{{ image }}</div>
               </div>
             </div>
         {% endfor %}
     </div>
 
-    {% for mp3 in all_mp3_files %}
-        <div class="responsive">
-            <i class="fa fa-music" aria-hidden="true"> {{ mp3 }}</i>
-                <i class="fa fa-play-circle" aria-hidden="true" onclick="wavesurfer{{loop.index0}}.playPause()"></i>
-                <i class="fa fa-stop-circle" aria-hidden="true"  onclick="wavesurfer{{loop.index0}}.stop()"></i>
-            <div id="waveform{{loop.index0}}"></div>
-            <script>
-            var wavesurfer{{loop.index0}} = WaveSurfer.create({
-                container: '#waveform{{loop.index0}}',
-                waveColor: 'violet',
-                progressColor: 'purple',
-                scrollParent: true
-            });
-            wavesurfer{{loop.index0}}.load('static/uploads/{{mp3}}');
-            </script>
+    {% for mp3 in audios %}
+        <div class="responsive player" data-src="{{ url_for('static', filename='uploads/' + mp3) }}">
+            <span class="player-title">♪ {{ mp3 }}</span>
+            <button type="button" class="btn-play" aria-label="播放 / 暫停">
+                <svg class="icon-play" viewBox="0 0 16 16" width="16" height="16"><path d="M4 2l10 6-10 6z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 16 16" width="16" height="16" hidden><path d="M4 2h3v12H4zM9 2h3v12H9z"/></svg>
+            </button>
+            <button type="button" class="btn-stop" aria-label="停止">
+                <svg viewBox="0 0 16 16" width="16" height="16"><path d="M3 3h10v10H3z"/></svg>
+            </button>
+            <div class="waveform"></div>
         </div>
     {% endfor %}
 

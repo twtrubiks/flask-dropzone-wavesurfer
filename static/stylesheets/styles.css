@@ -25,3 +25,15 @@ div.desc {
     float: left;
     width: 24.99999%;
 }
+
+.player button {
+    border: none;
+    background: none;
+    padding: 2px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.player-title {
+    vertical-align: middle;
+}
