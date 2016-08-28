@@ -1,6 +1,6 @@
 # flask-dropzone-wavesurfer
 flask-dropzone-wavesurfer 使用Python Flask 搭配 Dropzone.js 和 WaveSurfer.js 
-* [Demo待新增]()  
+* [Demo](https://youtu.be/xPxZJBzia1Y)  
  
 使用Python [Flask](http://flask.pocoo.org/) 搭配 [Dropzone.js](http://www.dropzonejs.com/) (可拖曳檔案上傳) 以及 [WaveSurfer.js](https://wavesurfer-js.org/) (播放音樂)的簡單範例程式，希望大家會喜歡:smile:
 
